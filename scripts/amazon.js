@@ -1,3 +1,6 @@
+import {cart, addToCart} from '../data/cart.js'
+import {products} from '../data/products.js';
+
 let productHTML = '';
 products.forEach((product) => {
     productHTML += `
@@ -56,31 +59,23 @@ products.forEach((product) => {
 });
 
 document.querySelector('.js-products-grid').innerHTML = productHTML;
+
+function updateCartQuantity(){
+      //defalt value for cart is 0, set in html, here we modify that 
+      let quantityTotal = 0;
+      cart.forEach((item) => {
+          quantityTotal += item.quantity;
+      });
+      document.querySelector(".js-cart-quantity").innerHTML = quantityTotal;
+}
+
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     button.addEventListener('click', () => {
         //html attribute on 'add to cart button' data-product-name accessed through dataset
-        console.log(button.dataset.id);
-        const productId = button.dataset.productId;
-
-        //currently a falsy value unless we assign it
-        let itemName;
-
-        cart.forEach((item) => {
-            if(item.productId === productId){
-                itemName = item;
-            }
-        });
-        
-        if(itemName){
-            itemName.quantity += 1;
-        }else{
-            cart.push(
-                {
-                    productId: productId,
-                    quantity: 1
-                }
-            );
-        }
+        console.log(button.dataset.productId);
         console.log(cart);
+        const productId = button.dataset.productId;
+        addToCart(productId);
+        updateCartQuantity();
     });
-})
+});
