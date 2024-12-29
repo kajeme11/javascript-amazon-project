@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "amazon.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "outputDirectory": "build" 
+}
