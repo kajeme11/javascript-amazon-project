@@ -7,25 +7,27 @@ export function renderPaymentSummary(){
     
     let result = 0;
     let deliveryShipping = 0;
+    let itemQuantity = 0
     cart.forEach((cartItem) => {
+        itemQuantity += cartItem.quantity;
         const prouct = getProduct(cartItem.productId);
         result += prouct.priceCents * cartItem.quantity;
         const deliveryOption = getDeliveryOptions(cartItem.deliveryOptionId);
         deliveryShipping += deliveryOption.priceCents;
     });
-
     const totalBeforeTax = result + deliveryShipping;
     const tax = totalBeforeTax * 0.1;
     const total = totalBeforeTax + tax;
 
     const paymentSummary = document.querySelector(".payment-summary");
+    document.querySelector(".js-page-title").innerHTML = (itemQuantity === 0) ? 'Cart is Empty': 'Review your order';
     paymentSummary.innerHTML = `
     <div class="payment-summary-title">
     Order Summary
     </div>
 
     <div class="payment-summary-row">
-    <div>Items (3):</div>
+    <div>Items: ${itemQuantity}</div>
     <div class="payment-summary-money">$${formatFrequency(result)}</div>
     </div>
 
@@ -51,5 +53,5 @@ export function renderPaymentSummary(){
 
     <button class="place-order-button button-primary">
     Place your order
-    </button>`
+    </button>`;
 }
