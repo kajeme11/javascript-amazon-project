@@ -2,6 +2,7 @@ import {cart} from '../../data/cart.js';
 import {getProduct} from '../../data/products.js';
 import formatFrequency from '../utils/money.js';
 import {getDeliveryOptions} from '../../data/deliveryOptions.js';
+import {addOrder} from '../../data/orders.js';
 
 export function renderPaymentSummary(){
     
@@ -55,7 +56,32 @@ export function renderPaymentSummary(){
     <div class="js-place-order-button">
     </div>
     `;
+    
     document.querySelector(".js-place-order-button").innerHTML = (itemQuantity === 0) ? `` : `<button class="place-order-button button-primary">
     Place your order
     </button>`; 
+    
+    document.querySelector(".js-place-order-button").addEventListener('click', async () => {
+        
+        try{
+            const response = await fetch('https://supersimplebackend.dev/orders',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cart: cart
+            })
+        });
+        //response.json() is also a promise that we need to wait for
+        const order =  await response.json();
+        addOrder(order);
+        // console.log(order);
+        window.location.href = 'orders.html';
+        }catch(error){
+            console.log('Error submitting order, please try again later');
+            console.log(error)
+        }
+    });
 }
