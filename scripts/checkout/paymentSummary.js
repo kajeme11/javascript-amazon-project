@@ -21,6 +21,7 @@ export function renderPaymentSummary(){
 
     const paymentSummary = document.querySelector(".payment-summary");
     document.querySelector(".js-page-title").innerHTML = (itemQuantity === 0) ? 'Cart is Empty': 'Review your order';
+   
     paymentSummary.innerHTML = `
     <div class="payment-summary-title">
     Order Summary
@@ -51,7 +52,10 @@ export function renderPaymentSummary(){
     <div class="payment-summary-money">$${formatFrequency(total)}</div>
     </div>
 
-    <button class="place-order-button button-primary">
+    <div class="js-place-order-button">
+    </div>
+    `;
+    document.querySelector(".js-place-order-button").innerHTML = (itemQuantity === 0) ? `` : `<button class="place-order-button button-primary">
     Place your order
-    </button>`;
+    </button>`; 
 }
