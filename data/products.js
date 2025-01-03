@@ -1,4 +1,4 @@
-import {formatCurrency} from '../scripts/utils/money.js';
+import { formatCurrency } from '../scripts/utils/money.js';
 
 class Product{
   id;
@@ -734,7 +734,9 @@ export function fetchProducts(){
       return new Product(product);
     });
   // console.log(products);
-  })
+  }).catch((error) => {
+    console.log('error fetching products');
+  });
   return fetchPromise;
 }
 
@@ -755,6 +757,11 @@ export function loadProducts(func){
     // console.log(products);
     func();
   });
+
+  xhr.addEventListener('error', () => {
+    console.log('Unexpected error.Please Try again later');
+  });
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }

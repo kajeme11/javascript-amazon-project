@@ -75,7 +75,7 @@ export function removeProductFromCart(productId){
         container.remove();
     }
     saveToStorage();
-    console.log(cart);
+    // console.log(cart);
 }
 
 export function updateDeliveryOption(productId, deliveryOptionId){
