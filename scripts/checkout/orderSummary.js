@@ -5,10 +5,10 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions} from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js';
 
-console.log(dayjs());
+// console.log(dayjs());
 const today = dayjs();
 const deliveryDate = today.add(7, 'day');
-console.log(deliveryDate.format('dddd, MMMM D'));
+// console.log(deliveryDate.format('dddd, MMMM D'));
 
 export function renderOrderSummary(){
 
@@ -49,7 +49,7 @@ export function renderOrderSummary(){
                     ${matchingProduct.name}
                     </div>
                     <div class="product-price">
-                    ${formatCurrency(matchingProduct.priceCents)}
+                    ${matchingProduct.getPrice()}
                     </div>
                     <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                     <span>
@@ -115,14 +115,14 @@ export function renderOrderSummary(){
 
     document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
-    console.log(cart);
+    // console.log(cart);
     document.querySelectorAll(".js-delete-quantity").forEach((link) => {
         link.addEventListener('click', () => {
             // console.log(link.dataset) 
             const productId = link.dataset.productId;
             removeProductFromCart(productId);  
             const container = document.querySelector(`.js-cart-item-container-${productId}`);
-            console.log(container);
+            // console.log(container);
             let cartSize = 0;
             cart.forEach((cartItem) => {
                 cartSize += cartItem.quantity;

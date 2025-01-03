@@ -1,6 +1,5 @@
 import {cart, addToCart} from '../data/cart.js'
 import {products} from '../data/products.js';
-import {formatCurrency} from './utils/money.js'
 
 let productHTML = '';
 products.forEach((product) => {
@@ -17,14 +16,14 @@ products.forEach((product) => {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src=${product.getStars()}>
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            ${formatCurrency(product.priceCents)}
+            ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -56,7 +55,7 @@ products.forEach((product) => {
         </div>
     `
 
-    console.log(productHTML);
+    // console.log(productHTML);
 });
 
 document.querySelector('.js-products-grid').innerHTML = productHTML;
@@ -73,8 +72,8 @@ function updateCartQuantity(){
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     button.addEventListener('click', () => {
         //html attribute on 'add to cart button' data-product-name accessed through dataset
-        console.log(button.dataset.productId);
-        console.log(cart);
+        // console.log(button.dataset.productId);
+        // console.log(cart);
         const productId = button.dataset.productId;
         addToCart(productId);
         updateCartQuantity();
